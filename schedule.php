@@ -33,7 +33,59 @@
             <th>Sat</th>
         </tr>
         <tr>
-            <th>0800-0830</th>
+            <th>0830-0930</th>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+        </tr>
+        <tr>
+            <th>0930-1030</th>
+            <td rowspan="3">a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+        </tr>
+        <tr>
+            <th>1030-1130</th>
+
+            <td>b</td>
+            <td>c</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+        </tr>
+        <tr>
+            <th>1130-1230</th>
+
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+        </tr>
+        <tr>
+            <th>1230-1330</th>
+            <td colspan="3">colspan</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+        </tr>
+        <tr>
+            <th>1330-1430</th>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+            <td>a</td>
+        </tr>
+        <tr>
+            <th>1430-1530</th>
             <td>a</td>
             <td>a</td>
             <td>a</td>
