@@ -18,6 +18,7 @@
     <h3>Enter your schedule below</h3>
     <form method="POST" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
         <div>
+            Day:
             <select name="day">
                 <?php
                 $days = ["Mon", "Tue", "Wed", "Thurs", "Fri", "Sat"];
@@ -26,6 +27,7 @@
                 }
                 ?>
             </select>
+            Start time:
             <select name="startTime">
                 <?php
                 for ($slot = 0; $slot < 20; $slot++) {
@@ -38,21 +40,22 @@
                 }
                 ?>
             </select>
+            End time:
             <select name="endTime">
                 <?php
                 for ($slot = 1; $slot < 21; $slot++) {
-                    if ($slot % 2 === 0) {
+                    if ($slot % 2 === 1) {
                         echo "<option value='$slot'>" . (9 + intdiv($slot, 2)) . ":00";
                     }
                     else {
-                        echo "<option value='$slot'>" . (9 + intdiv($slot, 2)) . ":30";
+                        echo "<option value='$slot'>" . (8 + intdiv($slot, 2)) . ":30";
                     }
                 }
                 ?>
             </select>
+            Task: <input name="task" width="40">
             <!--textarea rows="8" cols="70" name="scheduleData"></textarea-->
-        </div>
-        <div>
+
             <button type="submit">submit</button>
         </div>
     </form>
