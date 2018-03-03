@@ -61,18 +61,22 @@
     </form>
     <?php
     $duration = array_fill(0, 6, array_fill(0, 20, 1));
-    print_r($duration);
-    echo "<br>";
     $input = array_fill(0, 6, array_fill(0, 20, 0));
-    $input[0][1] = 2;
-    $input[0][2] = -1;
-    $input[0][3] = -1;
+//    $input[0][1] = 2;
+//    $input[0][2] = -1;
+//    $input[0][3] = -1;
+    $inputDay = $_POST['day'];
+    $startTime = $_POST['startTime'];
+    $endTime = $_POST['endTime'];
+    $input[$inputDay][$startTime] = $endTime - $startTime - 1;
+    for ($slot = $startTime + 1; $slot < $endTime; $slot++) {
+        $input[$inputDay][$slot] = -1;
+    }
     for ($day = 0; $day < 6; $day++) {
         for ($slot = 0; $slot < 20; $slot++) {
             $duration[$day][$slot] += $input[$day][$slot];
         }
     }
-    print_r($duration);
     echo "<br>";
     ?>
     <table>
@@ -106,11 +110,8 @@
         //echo "schedule data: $_POST[scheduleData]";
         ?>
     </table>
-    <?php
-    echo "_POST: ";
-    print_r($_POST);
-    ?>
-    <!--<table>
+    <div>new data: </div>
+    <table>
         <tr>
             <th>Time/Day</th>
             <th>Mon</th>
@@ -120,67 +121,30 @@
             <th>Fri</th>
             <th>Sat</th>
         </tr>
-        <tr>
-            <th>0830-0930</th>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-        </tr>
-        <tr>
-            <th>0930-1030</th>
-            <td rowspan="0">a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-        </tr>
-        <tr>
-            <th>1030-1130</th>
-
-            <td>b</td>
-            <td>c</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-        </tr>
-        <tr>
-            <th>1130-1230</th>
-
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-        </tr>
-        <tr>
-            <th>1230-1330</th>
-            <td colspan="3">colspan</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-        </tr>
-        <tr>
-            <th>1330-1430</th>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <th>1430-1530</th>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-            <td>a</td>
-        </tr>
-    </table>-->
+        <?php
+        for ($slot = 0; $slot < 20; $slot++) {
+            echo "<tr>";
+            for ($day = 0; $day < 7; $day++) {
+                if ($day == 0) {
+                    if ($slot % 2 == 0) {
+                        echo "<th>" . (8 + intdiv($slot, 2)) . ":30-" . (9 + intdiv($slot, 2)) . ":00</th>";
+                    }
+                    else {
+                        echo "<th>" . (9 + intdiv($slot, 2)) . ":00-" . (9 + intdiv($slot, 2)) . ":30</th>";
+                    }
+                }
+                else if ($input[$day - 1][$slot] !== 0) {
+                    echo "<td rowspan=\"{$input[$day - 1][$slot]}\">" . $input[$day - 1][$slot] . "</td>";
+                }
+            }
+            echo "</tr>";
+        }
+        //echo "schedule data: $_POST[scheduleData]";
+        ?>
+    </table>
+    <?php
+    echo "_POST: ";
+    print_r($_POST);
+    ?>
 </body>
 </html>
