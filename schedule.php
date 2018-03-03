@@ -8,8 +8,11 @@
             text-align: center;
             color: #202020;
         }
-        th, td {
+        .column0 {
             width: 100px;
+        }
+        .column {
+            width: 200px;
         }
     </style>
 </head>
@@ -54,7 +57,7 @@
                 ?>
             </select>
             Task: <input name="task" width="40">
-            <!--textarea rows="8" cols="70" name="scheduleData"></textarea-->
+            Venue: <input name="venue" width="40">
 
             <button type="submit">submit</button>
         </div>
@@ -63,23 +66,25 @@
     <h3>Your schedule: </h3>
     <?php
     $duration = array_fill(0, 6, array_fill(0, 20, 1));
+    $taskArr = array_fill(0, 6, array_fill(0, 20, ""));
     $inputDay = $_POST['day'];
     $startTime = $_POST['startTime'];
     $endTime = $_POST['endTime'];
     $duration[$inputDay][$startTime] += $endTime - $startTime - 1;
+    $taskArr[$inputDay][$startTime] = $_POST['task'] . "<br>" . $_POST['venue'];
     for ($slot = $startTime + 1; $slot < $endTime; $slot++) {
         $duration[$inputDay][$slot] -= 1;
     }
     ?>
     <table>
         <tr>
-            <th>Time/Day</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thurs</th>
-            <th>Fri</th>
-            <th>Sat</th>
+            <th class="column0">Time/Day</th>
+            <th class="column">Mon</th>
+            <th class="column">Tue</th>
+            <th class="column">Wed</th>
+            <th class="column">Thurs</th>
+            <th class="column">Fri</th>
+            <th class="column">Sat</th>
         </tr>
         <?php
         for ($slot = 0; $slot < 20; $slot++) {
@@ -87,19 +92,18 @@
             for ($day = 0; $day < 7; $day++) {
                 if ($day == 0) {
                     if ($slot % 2 == 0) {
-                        echo "<th>" . (8 + intdiv($slot, 2)) . ":30-" . (9 + intdiv($slot, 2)) . ":00</th>";
+                        echo "<th class='column0'>" . (8 + intdiv($slot, 2)) . ":30-" . (9 + intdiv($slot, 2)) . ":00</th>";
                     }
                     else {
-                        echo "<th>" . (9 + intdiv($slot, 2)) . ":00-" . (9 + intdiv($slot, 2)) . ":30</th>";
+                        echo "<th class='column0'>" . (9 + intdiv($slot, 2)) . ":00-" . (9 + intdiv($slot, 2)) . ":30</th>";
                     }
                 }
                 else if ($duration[$day - 1][$slot] > 0) {
-                    echo "<td rowspan=\"{$duration[$day - 1][$slot]}\">" . $duration[$day - 1][$slot] . "</td>";
+                    echo "<td class='column' rowspan='{$duration[$day - 1][$slot]}'><strong>" . $taskArr[$day - 1][$slot] . "</strong></td>";
                 }
             }
             echo "</tr>";
         }
-        //echo "schedule data: $_POST[scheduleData]";
         ?>
     </table>
     <?php
