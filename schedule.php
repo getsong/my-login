@@ -59,25 +59,17 @@
             <button type="submit">submit</button>
         </div>
     </form>
+    <br>
+    <h3>Your schedule: </h3>
     <?php
     $duration = array_fill(0, 6, array_fill(0, 20, 1));
-    $input = array_fill(0, 6, array_fill(0, 20, 0));
-//    $input[0][1] = 2;
-//    $input[0][2] = -1;
-//    $input[0][3] = -1;
     $inputDay = $_POST['day'];
     $startTime = $_POST['startTime'];
     $endTime = $_POST['endTime'];
-    $input[$inputDay][$startTime] = $endTime - $startTime - 1;
+    $duration[$inputDay][$startTime] += $endTime - $startTime - 1;
     for ($slot = $startTime + 1; $slot < $endTime; $slot++) {
-        $input[$inputDay][$slot] = -1;
+        $duration[$inputDay][$slot] -= 1;
     }
-    for ($day = 0; $day < 6; $day++) {
-        for ($slot = 0; $slot < 20; $slot++) {
-            $duration[$day][$slot] += $input[$day][$slot];
-        }
-    }
-    echo "<br>";
     ?>
     <table>
         <tr>
@@ -110,41 +102,10 @@
         //echo "schedule data: $_POST[scheduleData]";
         ?>
     </table>
-    <div>new data: </div>
-    <table>
-        <tr>
-            <th>Time/Day</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thurs</th>
-            <th>Fri</th>
-            <th>Sat</th>
-        </tr>
-        <?php
-        for ($slot = 0; $slot < 20; $slot++) {
-            echo "<tr>";
-            for ($day = 0; $day < 7; $day++) {
-                if ($day == 0) {
-                    if ($slot % 2 == 0) {
-                        echo "<th>" . (8 + intdiv($slot, 2)) . ":30-" . (9 + intdiv($slot, 2)) . ":00</th>";
-                    }
-                    else {
-                        echo "<th>" . (9 + intdiv($slot, 2)) . ":00-" . (9 + intdiv($slot, 2)) . ":30</th>";
-                    }
-                }
-                else if ($input[$day - 1][$slot] !== 0) {
-                    echo "<td rowspan=\"{$input[$day - 1][$slot]}\">" . $input[$day - 1][$slot] . "</td>";
-                }
-            }
-            echo "</tr>";
-        }
-        //echo "schedule data: $_POST[scheduleData]";
-        ?>
-    </table>
     <?php
-    echo "_POST: ";
+    echo "<br>_POST: ";
     print_r($_POST);
+    echo "<br><br>"
     ?>
 </body>
 </html>
